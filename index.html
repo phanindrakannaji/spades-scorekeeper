@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Spades">
+  <meta name="application-name" content="Spades">
+  <meta name="theme-color" content="#0b2e22">
+  <meta name="description" content="Table-side scorekeeper for Spades (Oh Hell style): bids, tricks, bags, and running totals. Works offline once loaded.">
+  <title>Spades Scorekeeper</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA+ElEQVR4nO2XsRHCMAxFZR8dLRNAzwYcK7AFM7EFK+TYgB4moKWGSndCkR3Lkp0UqLOt6D/LPsUKwGy93374nKe9789Axz8DFH9cTk3Ed+frCCL2EqexaZaDJI6krQBoJkIv8RREtIq/boPKHzVQM6Zdy8W1ENSqAbhoLUQVgGXHZoCceA2YCqBEQAux8hKW/DeHow3AetYlIMkj8LxouVimOuBhIoDn7qdiLjMDf4DZAUoKiNZSMZeZAQDfLORiZUsxflhbF8z/AinQFIw2c8u9A5K1eA9EgPFLtaXxF/j8jQku9mjNuDgAuQM40bIzkprTwJ16t+dfC3uG3Mub5oQAAAAASUVORK5CYII=">
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAGuklEQVR4nO3cy3EbORCA4RZrb7o6AvmuDFxOwVk4JmfhFLY2A92tCPaqs/bgHZkczgOPBtDd+L+jV0UOgZ9NkOLqQQZ6fH56H3n/aOPt5fVh1H13u2PinVuvyJveCRFjS8u4m9wwISNFi7BVb5CQUUIzbJUbImRo0Aj7UnsDxAwtGi1VBU3M0FbbVNGIJ2T0UHIEyZ7QxIxeSlrLegb0iPnXj2+t7wKKPn//2fw+ciZ18g+2ipmAY2kVeGrUST+kHTMRz0E77pSoT39AM2ZCnpNm2GdRdwmakCGiE3ZV0CNi7vEmA3pG7O9R1Lv/oWfMRBxDz/3ei3rzH2tjTnlgRBxbjwa2olYP+uyBEPJcWvawFfTdbwqJGZrO9rzmA4OtVu8KLw366MIIGSJtGllP6ZsJTcxo6aiF0km9brb6+9BHiBlrrZv4CFp7OhMz9uy1oTGlqyY0MaOUdtSL4qCJGbVaRH0R4Uv78G9puGhCM52hRXtKq33KQczH/v3n79GXYJZmO9lB81XQfEvMRJ2npDWVCc103reOmKi3aTV04Q1hO3vxEnUbj89P71kTmuMGesttrvrIwXFj29kUZkrf02ip6Xc5ZpUaK1HrI2hluZESta7koLfOMhw3bpXGSdR/bDWVc45mQiupjZKodRC0AmK0g6AN4YlRj6AraUdI1HUIukKr+Ii6HEEXah0dUZch6AK9YiPqfASdqXdkRJ2HoDMQl30E7QBPpHQEnWh0VKPv3wuCTmAlJivXYRlBn7AWkbXrsYagD1iNx+p1WUDQO4jGJ4Le4CFmD9c4AkGveArF07X2QtDOEfUtgr7iNQ6v190CQf/PexTer18LQUucGKI8jhrTB00EsUwddMSYIz6mHNMGHXnjIz+2M9MGHd2sUf81+gJ6mXGDrx/zpy9fB15JP2GDnjHgI+v1iBp4uKAJOc2yTtHCDhM0IZeJFrb7oAlZR5SwXX/KQcz6vK+pywntfdGt8zyt3U1oYu7H41q7CtrjAnvnbc3dBO1tYSPxtPYugva0oFF52QPzQXtZyBl42AvzQQM5TAftYSLMxvqemA3a+sLNzPLemAza8oLhN6t7ZDJooJS5oK0+83HP4l6ZCxqoYSpoi894HLO2Z6aCBmoRNEIxE7S1ly6ks7R3ZoIGNBA0QjERtKWXLJSxsocmgga0EDRCIWiEMjxoK2cv1LOwl8ODBjQRNEIhaIRC0AhlaNAW3kRA1+g9ZUIjlGFBj34mo52RezskaGKOb9Qedw+amOcxYq+7/8Hz9R/RJvBYRv+RdN4UIhSCRijDgx79EgU9FvZyeNCAJoJGKASNUEwEbeHshTpW9tBE0IAWgkYoZoK28pKFfJb2zkzQgAaCRiimgrb00oU01vbMVNBALXNBW3vGY5/FvTIXNFDDZNAWn/m4ZXWPTAYtYnfBYHtvzAYtYnvhZmV9T0wHDeQyH7T1iTATD3thPmgRHwsZnZc9cBG0iJ8FjcjT2rsJWsTXwkbhbc1dBS3ib4E987jW3f9ykoZlofmrS214DHnhbkJf87zwVnlfU5cT+hrTWof3kBfug14QdpkoIS9cHzm2fPryVXWTtG+vRtTHpSnMhF4r/bO91jc56uPSEjbotZoNtXyMmSXUVOGOHJFZfmJZQdAniMgXgnaGJ9gxgj5APP4QNEIhaId45dhH0DuIxieCdoon3DaC3kAsfhE0QkkO+vP3n3f/9uvHN8VLscHTdPZ0ram2mtpqbw8TGqEQ9BWPE8/jNbdUHXTEYwfG0GgpK+icswz6iTylc5u7vL28PrS5FF8iRzGLt5fXB5UzNMcO1NJqKDvoiMeOCNM5wmNYK2lN7VMOpjRKabZTFPTeM8dj1JEmm8fHstdM6UngIvL7MF16QYAFS8MfIT8+P73n3oj2swtz0exnCbrqDB3p6IG+Wg3Dj6BLjx1EjVzaMV+32/S7HESNtdZN3AStPaVFiBp/HLWgMZ1Frt4ULkreHC7O4uXN4pxadrEO+u7IUfMR3tmFMa3n0zNmkY0JLVI3pUXSwmVax9ajgeSgReqjFkmfyMQdQ8/93jtJHB4veka9IG5fRuzv0bH49Lw8ImrE1DpmkU5BLwh7TpqvutVBi+hGLULYs9A+PqZ8Apf8EZ121AvijqXVe6DUj5OzPnNuFfU1Avelx5v4nN+NZP8SpUfUwCL3F33ZX07ifwZALyWtVcXJtEYLNUOz6uujTGtoq22q+vvQRA0tGi2pxsgRBCU0h2KT6UrYSNHi1b3pcYGwsaXlMbXb+Ze459brvdbQN3REHtPIDwr+A5bQ8U1VFx4kAAAAAElFTkSuQmCC">
+  <style>
+:root {
+  --felt: #0b2e22;
+  --felt-mid: #114233;
+  --felt-lite: #1a5a45;
+  --ink: #071912;
+  --cream: #f7f1e3;
+  --cream-dim: #d9d0bc;
+  --gold: #e8c772;
+  --gold-2: #d4b056;
+  --gold-dk: #8f7328;
+  --heart: #e25b4c;
+  --heart-dk: #b83c32;
+  --ok: #6fd89a;
+  --ok-dk: #1e6b43;
+  --warn: #f0c35a;
+  --danger: #e25b4c;
+  --card: #fffdf8;
+  --panel: rgba(7, 28, 20, 0.55);
+  --line: rgba(232, 199, 114, 0.28);
+  --line-soft: rgba(247, 241, 227, 0.12);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --header-h: 64px;
+  --bar-h: 92px;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  background: var(--felt);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(46, 120, 88, 0.45), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.35), transparent 45%),
+    radial-gradient(circle at 0% 80%, rgba(232, 199, 114, 0.06), transparent 30%),
+    var(--felt);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><text x='8' y='28' font-size='20' fill='%23f7f1e3'>♠</text><text x='48' y='28' font-size='20' fill='%23e25b4c'>♥</text><text x='8' y='68' font-size='20' fill='%23e25b4c'>♦</text><text x='48' y='68' font-size='20' fill='%23f7f1e3'>♣</text></svg>");
+  z-index: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--safe-t);
+  padding-bottom: var(--safe-b);
+  padding-left: var(--safe-l);
+  padding-right: var(--safe-r);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 17px;
+  color: inherit;
+}
+
+input, textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  padding: 14px 16px;
+  min-height: 52px;
+  width: 100%;
+  color: var(--cream);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(232, 199, 114, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+input::placeholder, textarea::placeholder { color: rgba(247, 241, 227, 0.4); }
+
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(232, 199, 114, 0.2);
+  user-select: none;
+}
+
+button:disabled { cursor: default; opacity: 0.45; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  min-width: 52px;
+  padding: 0 20px;
+  border-radius: 14px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+
+.btn:active:not(:disabled) { transform: translateY(1px); }
+
+.btn-primary {
+  background: linear-gradient(180deg, #f3d78a 0%, #d4b056 100%);
+  color: #1a1408;
+  box-shadow: 0 2px 0 var(--gold-dk), 0 8px 16px rgba(0, 0, 0, 0.28);
+}
+
+.btn-primary:active:not(:disabled) { box-shadow: 0 1px 0 var(--gold-dk); }
+
+.btn-secondary {
+  background: rgba(247, 241, 227, 0.08);
+  border: 1px solid var(--line);
+  color: var(--cream);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--cream-dim);
+  min-width: 44px;
+}
+
+.btn-danger {
+  background: rgba(226, 91, 76, 0.15);
+  border: 1px solid rgba(226, 91, 76, 0.45);
+  color: #ffb3ab;
+}
+
+.btn-danger-solid {
+  background: linear-gradient(180deg, #ee6d5e, #c4473c);
+  color: white;
+  box-shadow: 0 2px 0 #8a2c25;
+}
+
+.btn-block { width: 100%; }
+.btn-lg { min-height: 58px; font-size: 1.08rem; }
+.btn-sm { min-height: 44px; padding: 0 14px; font-size: 0.95rem; }
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
+  border-radius: 12px;
+  background: rgba(247, 241, 227, 0.08);
+  border: 1px solid var(--line-soft);
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1, h2, h3, .brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.wrap {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 16px 18px 28px;
+}
+
+.wrap-wide { width: min(1180px, 100%); }
+
+/* ---- Header ---- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, rgba(11, 46, 34, 0.96), rgba(11, 46, 34, 0.88));
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.topbar .brand-block { flex: 1; min-width: 0; }
+.topbar .brand {
+  font-size: 1.35rem;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topbar .brand .suit { color: var(--gold); font-size: 1.45rem; line-height: 1; }
+.topbar .sub {
+  color: var(--cream-dim);
+  font-size: 0.82rem;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* ---- Home ---- */
+.hero {
+  text-align: center;
+  padding: 28px 8px 18px;
+}
+.hero .logo-suit {
+  font-size: 64px;
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  margin-top: 8px;
+  color: var(--cream);
+}
+.hero p {
+  margin: 8px auto 0;
+  max-width: 28em;
+  color: var(--cream-dim);
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0 28px;
+}
+.home-actions .btn { min-width: 160px; }
+
+.section-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.game-list { display: flex; flex-direction: column; gap: 12px; }
+
+.game-card {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  padding: 0;
+  min-height: 92px;
+}
+.game-card .body {
+  flex: 1;
+  padding: 14px 16px;
+  min-width: 0;
+}
+.game-card h3 {
+  font-size: 1.2rem;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.game-card .meta { color: var(--cream-dim); font-size: 0.9rem; }
+.game-card .leader-line {
+  margin-top: 6px;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.game-card .side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-left: 1px solid var(--line-soft);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-live { background: rgba(111, 216, 154, 0.18); color: var(--ok); }
+.badge-done { background: rgba(232, 199, 114, 0.18); color: var(--gold); }
+
+.empty-list {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--cream-dim);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+/* ---- Setup ---- */
+.field { margin-bottom: 18px; }
+.field label, .lbl {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.player-setup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  padding: 8px;
+}
+.player-setup.is-dealer {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(232, 199, 114, 0.35);
+}
+.player-setup input { flex: 1; min-width: 0; min-height: 48px; }
+.reorder { display: flex; flex-direction: column; gap: 4px; }
+.reorder .icon-btn { width: 40px; height: 36px; min-width: 40px; font-size: 0.85rem; }
+
+.dealer-hint { font-size: 0.85rem; color: var(--cream-dim); margin: 4px 0 12px; }
+
+.stepper-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  padding: 8px 12px;
+  width: fit-content;
+}
+.stepper-field .val {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  min-width: 2.2ch;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* ---- Steppers ---- */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.step-btn {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f3d78a, #d4b056);
+  color: #1a1408;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 0 var(--gold-dk);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.step-btn:active:not(:disabled) { transform: translateY(1px); box-shadow: 0 1px 0 var(--gold-dk); }
+.step-btn:disabled { opacity: 0.35; }
+.step-val {
+  min-width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  color: var(--cream);
+}
+.step-val.unset { color: rgba(247, 241, 227, 0.35); font-size: 1.6rem; }
+.step-val.set-zero { color: var(--cream-dim); }
+
+/* ---- Play ---- */
+.play-main {
+  flex: 1;
+  padding: 12px 16px 120px;
+  width: min(960px, 100%);
+  margin: 0 auto;
+}
+
+.round-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.round-title {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  margin-right: auto;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--line-soft);
+  font-size: 0.9rem;
+  color: var(--cream);
+}
+.chip strong { color: var(--gold); font-weight: 700; }
+.chip-dealer { border-color: var(--gold); background: rgba(232, 199, 114, 0.1); }
+
+.phase-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  background: rgba(0,0,0,0.2);
+  padding: 4px;
+  border-radius: 14px;
+}
+.phase-tab {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 11px;
+  font-weight: 700;
+  color: var(--cream-dim);
+  text-align: center;
+}
+.phase-tab.is-on {
+  background: rgba(232, 199, 114, 0.18);
+  color: var(--gold);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.phase-tab.is-done { color: var(--ok); }
+
+.player-list { display: flex; flex-direction: column; gap: 10px; }
+
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(7, 28, 20, 0.55);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 12px 12px 12px 14px;
+  min-height: 88px;
+}
+.player-row.is-next {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(232, 199, 114, 0.45), 0 8px 20px rgba(0,0,0,0.25);
+  background: rgba(232, 199, 114, 0.08);
+}
+.player-row.is-leader .p-name::after {
+  content: "  ♦ lead";
+  color: var(--gold);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: var(--font-ui);
+  font-weight: 700;
+}
+.p-info { flex: 1; min-width: 0; }
+.p-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.p-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: var(--cream-dim);
+}
+.tag-dealer { background: rgba(232, 199, 114, 0.2); color: var(--gold); }
+.tag-lead { background: rgba(111, 216, 154, 0.15); color: var(--ok); }
+.tag-bags { color: var(--cream-dim); }
+.p-preview { margin-top: 4px; font-size: 0.88rem; color: var(--cream-dim); }
+.p-preview.made { color: var(--ok); }
+.p-preview.missed { color: #ff9d94; }
+
+/* Action bar */
+.action-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  margin-top: auto;
+  padding: 12px 16px calc(12px + var(--safe-b));
+  background: linear-gradient(180deg, rgba(11, 46, 34, 0.0), rgba(11, 46, 34, 0.94) 18%);
+  backdrop-filter: blur(10px);
+}
+.action-inner {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tally {
+  text-align: center;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--line-soft);
+}
+.tally strong { font-family: var(--font-display); font-size: 1.15rem; }
+.tally.over { border-color: rgba(226, 91, 76, 0.45); color: #ffc4be; }
+.tally.under { border-color: rgba(111, 216, 154, 0.35); color: var(--ok); }
+.tally.even { border-color: var(--line); color: var(--gold); }
+.tally.bad { border-color: rgba(226, 91, 76, 0.55); color: #ffc4be; }
+.tally.ready { border-color: rgba(111, 216, 154, 0.5); color: var(--ok); }
+.action-row { display: flex; gap: 10px; }
+.action-row .btn { flex: 1; }
+
+/* ---- Summary ---- */
+.summary-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.summary-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 14px;
+  border-top: 1px solid var(--line-soft);
+}
+.summary-row:first-child { border-top: 0; }
+.summary-row .pts {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  min-width: 4.5ch;
+  text-align: right;
+}
+.pts.plus { color: var(--ok); }
+.pts.minus { color: #ff9d94; }
+.made-pill, .miss-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+.made-pill { background: rgba(111, 216, 154, 0.18); color: var(--ok); }
+.miss-pill { background: rgba(226, 91, 76, 0.18); color: #ff9d94; }
+.penalty-note { color: #ff9d94; font-size: 0.8rem; }
+
+/* ---- Scoreboard ---- */
+.board-wrap { overflow: auto; -webkit-overflow-scrolling: touch; padding-bottom: 16px; }
+.board {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 100%;
+  font-size: 0.92rem;
+}
+.board th, .board td {
+  border-bottom: 1px solid var(--line-soft);
+  border-right: 1px solid var(--line-soft);
+  padding: 8px 10px;
+  text-align: center;
+  white-space: nowrap;
+  background: rgba(7, 28, 20, 0.7);
+}
+.board thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #123c2e;
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 12px 10px;
+}
+.board th.sticky, .board td.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  text-align: left;
+  background: #123c2e;
+  font-weight: 700;
+  min-width: 88px;
+}
+.board thead th.sticky { z-index: 4; }
+.board td.leader-col { background: rgba(232, 199, 114, 0.08); }
+.board thead th.leader-col { color: var(--gold); box-shadow: inset 0 -2px 0 var(--gold); }
+.cell-gw { display: block; color: var(--cream-dim); font-size: 0.8rem; }
+.cell-pts { display: block; font-weight: 700; font-family: var(--font-display); font-size: 1.05rem; }
+.cell-pts.plus { color: var(--ok); }
+.cell-pts.minus { color: #ff9d94; }
+.board tr.edit-row td { cursor: pointer; }
+.board tr.edit-row:active td { background: rgba(232, 199, 114, 0.12); }
+.board tfoot td, .board tfoot th {
+  background: #0f3328;
+  font-weight: 700;
+  position: sticky;
+  bottom: 0;
+}
+.current-round-row td { outline: 1px dashed rgba(232, 199, 114, 0.35); }
+
+/* ---- Finish ---- */
+.finish {
+  text-align: center;
+  padding: 24px 8px 40px;
+}
+.finish .trophy { font-size: 56px; line-height: 1; }
+.finish h1 { font-size: clamp(2rem, 6vw, 2.6rem); margin: 8px 0 4px; }
+.finish .winner-name { color: var(--gold); }
+.standings { margin: 20px 0; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.stand-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+}
+.stand-row.rank-1 {
+  border-color: var(--gold);
+  background: rgba(232, 199, 114, 0.1);
+}
+.rank-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+}
+.stand-score {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* ---- Rules ---- */
+.rules {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 18px 0;
+  overflow: hidden;
+}
+.rules summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-weight: 700;
+  color: var(--gold);
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+.rules summary::-webkit-details-marker { display: none; }
+.rules summary::after { content: "▾"; color: var(--cream-dim); }
+.rules[open] summary::after { content: "▴"; }
+.rules .body { padding: 0 16px 16px; color: var(--cream-dim); font-size: 0.95rem; }
+.rules .body ul { margin: 8px 0; padding-left: 1.2em; }
+.rules .body li { margin: 6px 0; }
+
+/* ---- Modal ---- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 12px 12px calc(12px + var(--safe-b));
+}
+.modal {
+  background: #123528;
+  border: 1px solid var(--line);
+  border-radius: 20px 20px 16px 16px;
+  width: min(640px, 100%);
+  max-height: min(88dvh, 900px);
+  overflow: auto;
+  box-shadow: var(--shadow);
+  padding: 20px 18px 18px;
+  -webkit-overflow-scrolling: touch;
+}
+.modal h2 { margin-bottom: 8px; font-size: 1.45rem; }
+.modal .hint { color: var(--cream-dim); margin-bottom: 14px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+.modal-actions .btn { flex: 1; }
+
+.edit-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.edit-row .p-name { flex: 1; }
+
+/* ---- Toast ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + var(--safe-b));
+  transform: translateX(-50%);
+  background: #1a1408;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 12px 18px;
+  border-radius: 999px;
+  z-index: 80;
+  font-weight: 650;
+  box-shadow: var(--shadow);
+  max-width: 90vw;
+  text-align: center;
+}
+
+/* ---- Import ---- */
+textarea.code {
+  min-height: 180px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.file-btn { position: relative; overflow: hidden; }
+.file-btn input[type=file] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  min-height: 100%;
+}
+
+/* ---- Misc ---- */
+.muted { color: var(--cream-dim); }
+.gold { color: var(--gold); }
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  border: 0;
+}
+
+@media (min-width: 900px) and (orientation: landscape) {
+  .player-list.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+  }
+  .play-main { width: min(1100px, 100%); }
+  .action-inner { width: min(1100px, 100%); }
+}
+
+@media (max-width: 420px) {
+  .step-btn, .step-val { width: 50px; height: 50px; min-width: 50px; }
+  .step-val, .step-btn { font-size: 1.7rem; }
+  .player-row { padding: 10px; gap: 8px; }
+  .p-name { font-size: 1.08rem; }
+}
+
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+(function () {
+  "use strict";
+
+  var STORE_KEY = "spades-scorekeeper-v1";
+  var MIN_PLAYERS = 2;
+  var MAX_PLAYERS = 10;
+  var DEFAULT_ROUNDS = 13;
+  var MAX_ROUNDS = 20;
+  var UNDO_LIMIT = 40;
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  var db = { games: [] };
+  var ui = {
+    view: "home",
+    gameId: null,
+    draft: null,
+    modal: null,
+    toast: null,
+    importText: "",
+    editRound: null,
+    confirm: null
+  };
+  var toastTimer = null;
+
+  /* ------------ utils ------------ */
+  function escapeHtml(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function defaultGameName(d) {
+    d = d || new Date();
+    return "Game – " + MONTHS[d.getMonth()] + " " + d.getDate();
+  }
+
+  function formatDate(ts) {
+    var d = new Date(ts);
+    return MONTHS[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  }
+
+  function formatDateTime(ts) {
+    var d = new Date(ts);
+    var h = d.getHours();
+    var m = String(d.getMinutes()).padStart(2, "0");
+    var ap = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12;
+    return formatDate(ts) + " · " + h + ":" + m + " " + ap;
+  }
+
+  function slug(name) {
+    return String(name || "spades-game")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "spades-game";
+  }
+
+  function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  /* ------------ scoring ------------ */
+  function scoreRoundResult(guess, wins) {
+    guess = Number(guess);
+    wins = Number(wins);
+    if (!isFinite(guess)) guess = 0;
+    if (!isFinite(wins)) wins = 0;
+    if (wins >= guess) {
+      var bags = wins - guess;
+      return { made: true, bags: bags, basePoints: 10 * guess + bags };
+    }
+    return { made: false, bags: 0, basePoints: -10 * guess };
+  }
+
+  function applyBagPenalty(existingBags, newBags) {
+    var bags = (Number(existingBags) || 0) + (Number(newBags) || 0);
+    var penalty = 0;
+    while (bags >= 5) {
+      penalty += 50;
+      bags -= 5;
+    }
+    return { bags: bags, penalty: penalty };
+  }
+
+  function computeGame(game, extraRound) {
+    var byId = {};
+    (game.players || []).forEach(function (p) {
+      byId[p.id] = { total: 0, bags: 0, rounds: [] };
+    });
+    var rounds = (game.rounds || []).filter(function (r) { return r.complete; }).slice();
+    if (extraRound) {
+      rounds = rounds.filter(function (r) { return r.number !== extraRound.number; });
+      rounds.push(extraRound);
+    }
+    rounds.sort(function (a, b) { return a.number - b.number; });
+    rounds.forEach(function (r) {
+      (game.players || []).forEach(function (p) {
+        var guess = r.guesses ? r.guesses[p.id] : null;
+        var wins = r.wins ? r.wins[p.id] : null;
+        if (guess == null || wins == null) return;
+        var result = scoreRoundResult(guess, wins);
+        var bagRes = applyBagPenalty(byId[p.id].bags, result.bags);
+        var points = result.basePoints - bagRes.penalty;
+        byId[p.id].bags = bagRes.bags;
+        byId[p.id].total += points;
+        byId[p.id].rounds.push({
+          number: r.number,
+          cards: r.cards,
+          guess: guess,
+          wins: wins,
+          made: result.made,
+          bagsGained: result.bags,
+          penalty: bagRes.penalty,
+          points: points,
+          totalAfter: byId[p.id].total,
+          bagsAfter: byId[p.id].bags
+        });
+      });
+    });
+    var standings = (game.players || []).map(function (p) {
+      return {
+        id: p.id,
+        name: p.name,
+        total: byId[p.id].total,
+        bags: byId[p.id].bags,
+        rounds: byId[p.id].rounds
+      };
+    }).sort(function (a, b) {
+      if (b.total !== a.total) return b.total - a.total;
+      return String(a.name).localeCompare(String(b.name));
+    });
+    var top = standings.length ? standings[0].total : null;
+    var leaders = standings.filter(function (s) { return s.total === top; });
+    return { byId: byId, standings: standings, leader: standings[0] || null, leaders: leaders, topScore: top };
+  }
+
+  function dealerIndex(game, roundNumber) {
+    var n = (game.players || []).length;
+    if (!n) return 0;
+    var start = 0;
+    if (game.firstDealerId) {
+      var i = game.players.findIndex(function (p) { return p.id === game.firstDealerId; });
+      start = i >= 0 ? i : 0;
+    } else if (typeof game.firstDealerIndex === "number") {
+      start = game.firstDealerIndex;
+    }
+    return ((start + (roundNumber - 1)) % n + n) % n;
+  }
+
+  function leadIndex(game, roundNumber) {
+    var n = (game.players || []).length;
+    if (!n) return 0;
+    return (dealerIndex(game, roundNumber) + 1) % n;
+  }
+
+  /* ------------ storage ------------ */
+  function loadDb() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return { games: [] };
+      var data = JSON.parse(raw);
+      if (!data || !Array.isArray(data.games)) return { games: [] };
+      return { games: data.games };
+    } catch (e) {
+      return { games: [] };
+    }
+  }
+
+  function saveDb() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({ version: 1, games: db.games }));
+    } catch (e) {
+      toast("Could not save — storage may be full.");
+    }
+  }
+
+  function currentGame() {
+    if (!ui.gameId) return null;
+    for (var i = 0; i < db.games.length; i++) {
+      if (db.games[i].id === ui.gameId) return db.games[i];
+    }
+    return null;
+  }
+
+  function persist() {
+    var g = currentGame();
+    if (g) g.updatedAt = Date.now();
+    saveDb();
+  }
+
+  /* ------------ undo ------------ */
+  function snapshotOf(game) {
+    var copy = clone(game);
+    delete copy.undo;
+    return copy;
+  }
+
+  function pushUndo() {
+    var g = currentGame();
+    if (!g) return;
+    if (!g.undo) g.undo = [];
+    g.undo.push(snapshotOf(g));
+    if (g.undo.length > UNDO_LIMIT) g.undo.shift();
+  }
+
+  function canUndo() {
+    var g = currentGame();
+    return !!(g && g.undo && g.undo.length);
+  }
+
+  function doUndo() {
+    var g = currentGame();
+    if (!canUndo()) {
+      toast("Nothing to undo.");
+      return;
+    }
+    var prev = g.undo.pop();
+    var stack = g.undo;
+    Object.keys(g).forEach(function (k) { delete g[k]; });
+    Object.assign(g, prev);
+    g.undo = stack;
+    persist();
+    ui.view = g.phase === "finished" ? "finish" : "play";
+    ui.modal = null;
+    ui.editRound = null;
+    render();
+    toast("Undone.");
+  }
+
+  /* ------------ game helpers ------------ */
+  function getRound(game, number) {
+    if (!game.rounds) game.rounds = [];
+    var r = null;
+    for (var i = 0; i < game.rounds.length; i++) {
+      if (game.rounds[i].number === number) { r = game.rounds[i]; break; }
+    }
+    if (!r) {
+      r = {
+        number: number,
+        cards: number,
+        guesses: {},
+        wins: {},
+        guessSet: {},
+        winSet: {},
+        complete: false
+      };
+      game.rounds.push(r);
+    }
+    return r;
+  }
+
+  function allSet(round, players, kind) {
+    var key = kind === "wins" ? "winSet" : "guessSet";
+    return players.every(function (p) { return !!(round[key] && round[key][p.id]); });
+  }
+
+  function sumField(round, players, field) {
+    var sum = 0;
+    var ok = true;
+    players.forEach(function (p) {
+      var v = round[field] ? round[field][p.id] : null;
+      if (v == null) ok = false;
+      else sum += Number(v);
+    });
+    return { sum: sum, complete: ok };
+  }
+
+  function nextUnsetIndex(game, round, kind) {
+    var n = game.players.length;
+    var start = leadIndex(game, round.number);
+    var key = kind === "wins" ? "winSet" : "guessSet";
+    for (var i = 0; i < n; i++) {
+      var idx = (start + i) % n;
+      if (!round[key] || !round[key][game.players[idx].id]) return idx;
+    }
+    return -1;
+  }
+
+  function newDraft() {
+    var players = [];
+    for (var i = 0; i < 4; i++) players.push({ id: uid(), name: "" });
+    return {
+      name: defaultGameName(),
+      players: players,
+      firstDealerId: players[0].id,
+      totalRounds: DEFAULT_ROUNDS
+    };
+  }
+
+  /* ------------ actions ------------ */
+  function startGame() {
+    var draft = ui.draft;
+    if (!draft) return;
+    var players = draft.players
+      .map(function (p) { return { id: p.id, name: String(p.name || "").trim() }; })
+      .filter(function (p) { return p.name; });
+    if (players.length < MIN_PLAYERS) {
+      toast("Add at least " + MIN_PLAYERS + " player names.");
+      return;
+    }
+    if (players.length > MAX_PLAYERS) {
+      toast("Maximum " + MAX_PLAYERS + " players.");
+      return;
+    }
+    var rounds = Number(draft.totalRounds) || DEFAULT_ROUNDS;
+    rounds = Math.max(1, Math.min(MAX_ROUNDS, Math.round(rounds)));
+    var dealerId = draft.firstDealerId;
+    if (!players.some(function (p) { return p.id === dealerId; })) dealerId = players[0].id;
+    var game = {
+      id: uid(),
+      name: String(draft.name || defaultGameName()).trim() || defaultGameName(),
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      players: players,
+      firstDealerId: dealerId,
+      totalRounds: rounds,
+      currentRound: 1,
+      phase: "guesses",
+      rounds: [],
+      undo: []
+    };
+    getRound(game, 1);
+    db.games.unshift(game);
+    ui.gameId = game.id;
+    ui.draft = null;
+    ui.view = "play";
+    persist();
+    render();
+  }
+
+  function setStepper(playerId, field, delta, asSet) {
+    var g = currentGame();
+    if (!g || g.phase === "finished") return;
+    var r = getRound(g, g.currentRound);
+    if (r.complete && g.phase !== "summary") return;
+    var setKey = field === "wins" ? "winSet" : "guessSet";
+    if (g.phase === "guesses" && field !== "guesses") return;
+    if (g.phase === "wins" && field !== "wins") return;
+    if (g.phase === "summary") return;
+    pushUndo();
+    if (!r[field]) r[field] = {};
+    if (!r[setKey]) r[setKey] = {};
+    var wasSet = !!r[setKey][playerId];
+    var cur = wasSet ? Number(r[field][playerId]) : 0;
+    if (!wasSet && asSet && delta === 0) {
+      cur = 0;
+    } else {
+      cur = Math.max(0, Math.min(r.cards, cur + delta));
+    }
+    r[field][playerId] = cur;
+    r[setKey][playerId] = true;
+    persist();
+    render();
+  }
+
+  function lockGuesses() {
+    var g = currentGame();
+    if (!g) return;
+    var r = getRound(g, g.currentRound);
+    if (!allSet(r, g.players, "guesses")) {
+      toast("Every player needs a guess.");
+      return;
+    }
+    pushUndo();
+    g.phase = "wins";
+    persist();
+    render();
+  }
+
+  function backToGuesses() {
+    var g = currentGame();
+    if (!g || g.phase !== "wins") return;
+    pushUndo();
+    g.phase = "guesses";
+    persist();
+    render();
+  }
+
+  function finishRound() {
+    var g = currentGame();
+    if (!g) return;
+    var r = getRound(g, g.currentRound);
+    if (!allSet(r, g.players, "wins")) {
+      toast("Record a win count for every player.");
+      return;
+    }
+    var tot = sumField(r, g.players, "wins");
+    if (tot.sum !== r.cards) {
+      toast("Wins must add up to " + r.cards + " (now " + tot.sum + ").");
+      return;
+    }
+    pushUndo();
+    r.complete = true;
+    g.phase = "summary";
+    persist();
+    render();
+  }
+
+  function nextRound() {
+    var g = currentGame();
+    if (!g || g.phase !== "summary") return;
+    pushUndo();
+    if (g.currentRound >= g.totalRounds) {
+      g.phase = "finished";
+      ui.view = "finish";
+    } else {
+      g.currentRound += 1;
+      g.phase = "guesses";
+      getRound(g, g.currentRound);
+      ui.view = "play";
+    }
+    persist();
+    render();
+  }
+
+  function saveEditedRound(roundNumber, guesses, wins) {
+    var g = currentGame();
+    if (!g) return false;
+    var r = getRound(g, roundNumber);
+    var cards = r.cards;
+    var sum = 0;
+    for (var i = 0; i < g.players.length; i++) {
+      var id = g.players[i].id;
+      if (guesses[id] == null || wins[id] == null) {
+        toast("Set guess and wins for every player.");
+        return false;
+      }
+      if (guesses[id] < 0 || guesses[id] > cards || wins[id] < 0 || wins[id] > cards) {
+        toast("Values must be between 0 and " + cards + ".");
+        return false;
+      }
+      sum += Number(wins[id]);
+    }
+    if (sum !== cards) {
+      toast("Wins must add up to " + cards + " (now " + sum + ").");
+      return false;
+    }
+    pushUndo();
+    r.guesses = guesses;
+    r.wins = wins;
+    r.guessSet = {};
+    r.winSet = {};
+    g.players.forEach(function (p) {
+      r.guessSet[p.id] = true;
+      r.winSet[p.id] = true;
+    });
+    r.complete = true;
+    persist();
+    ui.modal = null;
+    ui.editRound = null;
+    render();
+    toast("Round " + roundNumber + " updated.");
+    return true;
+  }
+
+  function deleteGame(id) {
+    db.games = db.games.filter(function (g) { return g.id !== id; });
+    if (ui.gameId === id) {
+      ui.gameId = null;
+      ui.view = "home";
+    }
+    saveDb();
+    ui.confirm = null;
+    render();
+    toast("Game deleted.");
+  }
+
+  function exportPayload(gameOrAll) {
+    if (gameOrAll === "all") {
+      return {
+        type: "spades-scorekeeper-backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        games: db.games.map(function (g) { var c = snapshotOf(g); return c; })
+      };
+    }
+    var c = snapshotOf(gameOrAll);
+    return {
+      type: "spades-scorekeeper-game",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      game: c
+    };
+  }
+
+  function downloadJson(filename, obj) {
+    var blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 500);
+  }
+
+  function normalizeImported(data) {
+    var games = [];
+    if (!data) return games;
+    if (Object.prototype.toString.call(data) === "[object Array]") {
+      data.forEach(function (item) {
+        if (item && item.game) games.push(item.game);
+        else if (item && item.players) games.push(item);
+      });
+      return games;
+    }
+    if (data.games && Array.isArray(data.games)) {
+      data.games.forEach(function (g) { if (g) games.push(g); });
+    }
+    if (data.game) games.push(data.game);
+    if (data.players && data.rounds && !data.game && !data.games) games.push(data);
+    return games;
+  }
+
+  function importGames(data) {
+    var incoming = normalizeImported(data);
+    if (!incoming.length) {
+      toast("No games found in that file.");
+      return 0;
+    }
+    var existing = {};
+    db.games.forEach(function (g) { existing[g.id] = true; });
+    var added = 0;
+    incoming.forEach(function (g) {
+      if (!g || !Array.isArray(g.players)) return;
+      g = clone(g);
+      if (!g.id || existing[g.id]) g.id = uid();
+      existing[g.id] = true;
+      g.undo = [];
+      g.updatedAt = Date.now();
+      if (!g.createdAt) g.createdAt = Date.now();
+      if (!g.name) g.name = defaultGameName();
+      if (!g.totalRounds) g.totalRounds = DEFAULT_ROUNDS;
+      if (!g.currentRound) g.currentRound = 1;
+      if (!g.phase) g.phase = "guesses";
+      if (!g.rounds) g.rounds = [];
+      db.games.unshift(g);
+      added += 1;
+    });
+    saveDb();
+    return added;
+  }
+
+  function toast(msg) {
+    ui.toast = msg;
+    renderToastOnly();
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      ui.toast = null;
+      renderToastOnly();
+    }, 2400);
+  }
+
+  function renderToastOnly() {
+    var el = document.getElementById("toast");
+    if (!el) return;
+    if (!ui.toast) {
+      el.hidden = true;
+      el.textContent = "";
+    } else {
+      el.hidden = false;
+      el.textContent = ui.toast;
+    }
+  }
+
+  /* ------------ render ------------ */
+  function ptsClass(n) { return n < 0 ? "minus" : "plus"; }
+  function fmtPts(n) { return (n > 0 ? "+" : "") + n; }
+
+  function rulesHtml(open) {
+    return (
+      '<details class="rules"' + (open ? " open" : "") + ">" +
+        "<summary>Rules &amp; scoring</summary>" +
+        '<div class="body">' +
+          "<p>13 rounds by default. Round <em>r</em> deals <em>r</em> cards to each player. Highest total after the last round wins.</p>" +
+          "<ul>" +
+            "<li>The dealer rotates each round. The player after the dealer in seating order leads the first trick.</li>" +
+            "<li>Follow the suit that was led if you can. If you cannot, you may play any card. A spade beats any non-spade. Highest spade wins if any were played; otherwise the highest card of the led suit wins. The trick winner leads the next trick.</li>" +
+            "<li>Before play, each player guesses (bids) how many tricks they will win, from 0 to the number of cards this round.</li>" +
+            "<li><strong>Made the bid</strong> (wins ≥ guess): <strong>+10 × guess</strong>, plus <strong>+1</strong> for each extra trick (a “bag”). A made bid of 0 is 0 points, plus 1 per extra trick — there is no nil bonus.</li>" +
+            "<li><strong>Missed the bid</strong> (wins &lt; guess): <strong>−10 × guess</strong>. No bags, no plus points.</li>" +
+            "<li><strong>Bag penalty:</strong> extra tricks accumulate. Every time a player reaches 5 bags, they score <strong>−50</strong> and 5 bags are removed. This can happen more than once.</li>" +
+          "</ul>" +
+        "</div>" +
+      "</details>"
+    );
+  }
+
+  function renderHome() {
+    var cards = db.games.map(function (g) {
+      var stats = computeGame(g);
+      var done = g.phase === "finished" || (g.currentRound >= g.totalRounds && g.phase === "summary" && (g.rounds || []).some(function (r) { return r.number === g.totalRounds && r.complete; }) && g.phase === "finished");
+      done = g.phase === "finished";
+      var status = done
+        ? '<span class="badge badge-done">Finished</span>'
+        : '<span class="badge badge-live">Round ' + g.currentRound + " of " + g.totalRounds + "</span>";
+      var leader = "";
+      if (stats.leader && (g.rounds || []).some(function (r) { return r.complete; })) {
+        if (stats.leaders.length > 1 && stats.leaders[0].total === stats.leaders[1].total) {
+          leader = '<div class="leader-line">Tied at ' + stats.leader.total + "</div>";
+        } else {
+          leader = '<div class="leader-line">Leader: ' + escapeHtml(stats.leader.name) + " (" + stats.leader.total + ")</div>";
+        }
+      }
+      return (
+        '<div class="game-card">' +
+          '<button type="button" class="body" data-act="resume" data-id="' + g.id + '">' +
+            "<h3>" + escapeHtml(g.name) + " " + status + "</h3>" +
+            '<div class="meta">' + escapeHtml(formatDateTime(g.updatedAt || g.createdAt)) +
+              " · " + g.players.length + " player" + (g.players.length === 1 ? "" : "s") +
+              (done ? " · Final" : "") +
+            "</div>" +
+            leader +
+          "</button>" +
+          '<div class="side">' +
+            '<button type="button" class="btn btn-sm btn-secondary" data-act="resume" data-id="' + g.id + '">' + (done ? "View" : "Resume") + "</button>" +
+            '<button type="button" class="btn btn-sm btn-danger" data-act="confirm-delete" data-id="' + g.id + '">Delete</button>' +
+          "</div>" +
+        "</div>"
+      );
+    }).join("");
+
+    return (
+      '<div class="wrap">' +
+        '<div class="hero">' +
+          '<div class="logo-suit" aria-hidden="true">♠</div>' +
+          "<h1>Spades</h1>" +
+          "<p>Scorekeeper for the table — guesses, tricks, bags, and running totals, saved on this device.</p>" +
+        "</div>" +
+        '<div class="home-actions">' +
+          '<button type="button" class="btn btn-primary btn-lg" data-act="new-game">New game</button>' +
+          '<button type="button" class="btn btn-secondary" data-act="goto-import">Import</button>' +
+          (db.games.length ? '<button type="button" class="btn btn-secondary" data-act="export-all">Export all</button>' : "") +
+        "</div>" +
+        (db.games.length
+          ? '<div class="section-label">Saved games</div><div class="game-list">' + cards + "</div>"
+          : '<div class="empty-list">No games yet. Start a new one and pass the iPad around the table.</div>') +
+        rulesHtml(false) +
+      "</div>"
+    );
+  }
+
+  function renderSetup() {
+    var d = ui.draft;
+    var named = d.players.filter(function (p) { return String(p.name || "").trim(); }).length;
+    var rows = d.players.map(function (p, i) {
+      var isDealer = p.id === d.firstDealerId;
+      return (
+        '<div class="player-setup' + (isDealer ? " is-dealer" : "") + '">' +
+          '<div class="reorder">' +
+            '<button type="button" class="icon-btn" data-act="move-player" data-i="' + i + '" data-dir="-1" aria-label="Move up"' + (i === 0 ? " disabled" : "") + ">▲</button>" +
+            '<button type="button" class="icon-btn" data-act="move-player" data-i="' + i + '" data-dir="1" aria-label="Move down"' + (i === d.players.length - 1 ? " disabled" : "") + ">▼</button>" +
+          "</div>" +
+          '<input type="text" maxlength="24" placeholder="Player ' + (i + 1) + ' name" data-field="player-name" data-id="' + p.id + '" value="' + escapeHtml(p.name) + '" autocomplete="off" enterkeyhint="next">' +
+          '<button type="button" class="btn btn-sm ' + (isDealer ? "btn-primary" : "btn-secondary") + '" data-act="set-dealer" data-id="' + p.id + '">' + (isDealer ? "Dealer" : "Set dealer") + "</button>" +
+          '<button type="button" class="icon-btn" data-act="remove-player" data-id="' + p.id + '" aria-label="Remove player" ' + (d.players.length <= MIN_PLAYERS ? "disabled" : "") + ">✕</button>" +
+        "</div>"
+      );
+    }).join("");
+
+    return (
+      '<div class="topbar">' +
+        '<button type="button" class="icon-btn" data-act="home" aria-label="Back">←</button>' +
+        '<div class="brand-block"><div class="brand"><span class="suit">♠</span> New game</div></div>' +
+      "</div>" +
+      '<div class="wrap">' +
+        '<div class="field">' +
+          '<label for="game-name">Game name</label>' +
+          '<input id="game-name" type="text" maxlength="48" data-field="game-name" value="' + escapeHtml(d.name) + '" autocomplete="off">' +
+        "</div>" +
+        '<div class="field">' +
+          '<div class="lbl">Rounds</div>' +
+          '<div class="stepper-field">' +
+            '<button type="button" class="step-btn" data-act="draft-rounds" data-delta="-1" ' + (d.totalRounds <= 1 ? "disabled" : "") + ">−</button>" +
+            '<div class="val">' + d.totalRounds + "</div>" +
+            '<button type="button" class="step-btn" data-act="draft-rounds" data-delta="1" ' + (d.totalRounds >= MAX_ROUNDS ? "disabled" : "") + ">+</button>" +
+          "</div>" +
+          '<div class="dealer-hint">Round 1 deals 1 card each, up to ' + d.totalRounds + " cards in the last round.</div>" +
+        "</div>" +
+        '<div class="field">' +
+          '<div class="lbl">Players · seating order</div>' +
+          '<div class="dealer-hint">Tap “Set dealer” for the first dealer. The next player in this list leads the first trick. Reorder with the arrows.</div>' +
+          rows +
+          (d.players.length < MAX_PLAYERS
+            ? '<button type="button" class="btn btn-secondary btn-block" data-act="add-player">+ Add player</button>'
+            : "") +
+        "</div>" +
+        '<button type="button" class="btn btn-primary btn-lg btn-block" data-act="start-game"' + (named < MIN_PLAYERS ? " disabled" : "") + ">Start game" + (named < MIN_PLAYERS ? " · need " + (MIN_PLAYERS - named) + " more" : " · " + named + " players") + "</button>" +
+      "</div>"
+    );
+  }
+
+  function playHeader(g, stats) {
+    var r = g.currentRound;
+    var di = dealerIndex(g, r);
+    var li = leadIndex(g, r);
+    var dealer = g.players[di] ? g.players[di].name : "";
+    var lead = g.players[li] ? g.players[li].name : "";
+    var leaderLine = "";
+    if (stats.leader && (g.rounds || []).some(function (x) { return x.complete; })) {
+      if (stats.leaders.length > 1) leaderLine = "Tied " + stats.leader.total;
+      else leaderLine = "Leader " + stats.leader.name + " " + stats.leader.total;
+    }
+    return (
+      '<div class="topbar">' +
+        '<button type="button" class="icon-btn" data-act="home" aria-label="All games">←</button>' +
+        '<div class="brand-block">' +
+          '<div class="brand"><span class="suit">♠</span> ' + escapeHtml(g.name) + "</div>" +
+          '<div class="sub">' + (leaderLine ? escapeHtml(leaderLine) + " · " : "") + escapeHtml(formatDate(g.createdAt)) + "</div>" +
+        "</div>" +
+        '<div class="top-actions">' +
+          '<button type="button" class="btn btn-sm btn-secondary" data-act="undo" ' + (canUndo() ? "" : "disabled") + ">Undo</button>" +
+          '<button type="button" class="btn btn-sm btn-secondary" data-act="goto-board">Scores</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderPlay() {
+    var g = currentGame();
+    if (!g) return renderHome();
+    if (g.phase === "finished") return renderFinish();
+    var stats = computeGame(g);
+    var r = getRound(g, g.currentRound);
+    var di = dealerIndex(g, g.currentRound);
+    var li = leadIndex(g, g.currentRound);
+    var nextIdx = -1;
+    if (g.phase === "guesses") nextIdx = nextUnsetIndex(g, r, "guesses");
+    var cards = r.cards;
+
+    var body;
+    if (g.phase === "summary") {
+      body = renderSummaryBody(g, r, stats);
+    } else {
+      var field = g.phase === "wins" ? "wins" : "guesses";
+      var setKey = g.phase === "wins" ? "winSet" : "guessSet";
+      var previewStats = null;
+      if (g.phase === "wins" && allSet(r, g.players, "wins")) {
+        previewStats = computeGame(g, {
+          number: r.number,
+          cards: r.cards,
+          guesses: r.guesses,
+          wins: r.wins,
+          complete: true
+        });
+      }
+      var rows = g.players.map(function (p, i) {
+        var set = !!(r[setKey] && r[setKey][p.id]);
+        var val = set ? r[field][p.id] : null;
+        var tags = "";
+        if (i === di) tags += '<span class="tag tag-dealer">Dealer</span>';
+        if (i === li) tags += '<span class="tag tag-lead">Leads</span>';
+        var bags = stats.byId[p.id] ? stats.byId[p.id].bags : 0;
+        tags += '<span class="tag tag-bags">Bags ' + bags + "</span>";
+        if (stats.byId[p.id]) tags += '<span class="tag">Total ' + stats.byId[p.id].total + "</span>";
+        var preview = "";
+        if (previewStats && previewStats.byId[p.id]) {
+          var pr = previewStats.byId[p.id].rounds;
+          var last = pr[pr.length - 1];
+          if (last && last.number === r.number) {
+            preview = '<div class="p-preview ' + (last.made ? "made" : "missed") + '">' +
+              (last.made ? "Would make " : "Would miss ") + fmtPts(last.points) +
+              (last.penalty ? " incl. bag penalty −" + last.penalty : "") +
+              " · bags " + last.bagsAfter + "</div>";
+          }
+        }
+        var atMin = set && val <= 0;
+        var atMax = set && val >= cards;
+        return (
+          '<div class="player-row' + (i === nextIdx ? " is-next" : "") + '">' +
+            '<div class="p-info">' +
+              '<div class="p-name">' + escapeHtml(p.name) + "</div>" +
+              '<div class="p-tags">' + tags + "</div>" +
+              preview +
+            "</div>" +
+            '<div class="stepper">' +
+              '<button type="button" class="step-btn" data-act="step" data-field="' + field + '" data-id="' + p.id + '" data-delta="-1" aria-label="Decrease"' + (atMin ? " disabled" : "") + ">−</button>" +
+              '<button type="button" class="step-val' + (set ? (val === 0 ? " set-zero" : "") : " unset") + '" data-act="step-set" data-field="' + field + '" data-id="' + p.id + '" aria-label="' + (set ? val : "Tap to set 0") + '">' + (set ? val : "—") + "</button>" +
+              '<button type="button" class="step-btn" data-act="step" data-field="' + field + '" data-id="' + p.id + '" data-delta="1" aria-label="Increase"' + (atMax ? " disabled" : "") + ">+</button>" +
+            "</div>" +
+          "</div>"
+        );
+      }).join("");
+
+      var tally, actions;
+      if (g.phase === "guesses") {
+        var gs = sumField(r, g.players, "guesses");
+        var setCount = g.players.filter(function (p) { return r.guessSet && r.guessSet[p.id]; }).length;
+        var cls = "tally";
+        var msg;
+        if (setCount < g.players.length) {
+          msg = "Guesses set " + setCount + " of " + g.players.length + " · tap a dash to bid 0";
+        } else if (gs.sum === cards) {
+          cls += " even";
+          msg = "Total guesses <strong>" + gs.sum + "</strong> vs " + cards + " cards · table is even — someone may get set";
+        } else if (gs.sum > cards) {
+          cls += " over";
+          msg = "Total guesses <strong>" + gs.sum + "</strong> vs " + cards + " cards · overbid by " + (gs.sum - cards);
+        } else {
+          cls += " under";
+          msg = "Total guesses <strong>" + gs.sum + "</strong> vs " + cards + " cards · underbid by " + (cards - gs.sum);
+        }
+        tally = '<div class="' + cls + '">' + msg + "</div>";
+        actions = '<div class="action-row"><button type="button" class="btn btn-primary btn-lg" data-act="lock-guesses"' + (setCount < g.players.length ? " disabled" : "") + ">Lock guesses · record wins</button></div>";
+      } else {
+        var ws = sumField(r, g.players, "wins");
+        var wset = g.players.filter(function (p) { return r.winSet && r.winSet[p.id]; }).length;
+        var left = cards - (ws.complete ? ws.sum : (function () {
+          var s = 0;
+          g.players.forEach(function (p) { if (r.winSet && r.winSet[p.id]) s += Number(r.wins[p.id] || 0); });
+          return s;
+        })());
+        var ready = wset === g.players.length && ws.sum === cards;
+        var cls2 = "tally" + (ready ? " ready" : (wset === g.players.length && ws.sum !== cards ? " bad" : ""));
+        var msg2;
+        if (wset < g.players.length) {
+          msg2 = "Tricks recorded for " + wset + " of " + g.players.length + " · <strong>" + left + "</strong> of " + cards + " still to assign";
+        } else if (ws.sum === cards) {
+          msg2 = "All <strong>" + cards + "</strong> tricks assigned. Ready to finish the round.";
+        } else if (ws.sum > cards) {
+          msg2 = "Assigned <strong>" + ws.sum + "</strong> of " + cards + " · take back " + (ws.sum - cards);
+        } else {
+          msg2 = "Assigned <strong>" + ws.sum + "</strong> of " + cards + " · <strong>" + (cards - ws.sum) + "</strong> remaining";
+        }
+        tally = '<div class="' + cls2 + '">' + msg2 + "</div>";
+        actions = '<div class="action-row">' +
+          '<button type="button" class="btn btn-secondary" data-act="back-guesses">Back to guesses</button>' +
+          '<button type="button" class="btn btn-primary btn-lg" data-act="finish-round"' + (ready ? "" : " disabled") + ">Finish round</button>" +
+          "</div>";
+      }
+
+      body =
+        '<div class="round-meta">' +
+          '<div class="round-title">Round ' + g.currentRound + " of " + g.totalRounds + "</div>" +
+          '<span class="chip"><strong>' + cards + "</strong> card" + (cards === 1 ? "" : "s") + "</span>" +
+          '<span class="chip chip-dealer">Dealer <strong>' + escapeHtml(g.players[di].name) + "</strong></span>" +
+          '<span class="chip">Leads <strong>' + escapeHtml(g.players[li].name) + "</strong></span>" +
+        "</div>" +
+        '<div class="phase-tabs">' +
+          '<div class="phase-tab' + (g.phase === "guesses" ? " is-on" : " is-done") + '">1 · Guesses</div>' +
+          '<div class="phase-tab' + (g.phase === "wins" ? " is-on" : "") + '">2 · Wins</div>' +
+        "</div>" +
+        '<div class="player-list grid-2">' + rows + "</div>" +
+        '<div class="action-bar"><div class="action-inner">' + tally + actions + "</div></div>";
+    }
+
+    return playHeader(g, stats) + '<div class="play-main">' + body + "</div>";
+  }
+
+  function renderSummaryBody(g, r, stats) {
+    var rows = g.players.map(function (p) {
+      var hist = (stats.byId[p.id].rounds || []).filter(function (x) { return x.number === r.number; })[0];
+      if (!hist) return "";
+      return (
+        '<div class="summary-row">' +
+          "<div>" +
+            '<div class="p-name">' + escapeHtml(p.name) + "</div>" +
+            '<div class="muted">Guessed ' + hist.guess + " · won " + hist.wins +
+              (hist.bagsGained ? " · +" + hist.bagsGained + " bag" + (hist.bagsGained === 1 ? "" : "s") : "") +
+              " · bags now " + hist.bagsAfter +
+            "</div>" +
+            (hist.penalty ? '<div class="penalty-note">Bag penalty −' + hist.penalty + "</div>" : "") +
+          "</div>" +
+          (hist.made ? '<span class="made-pill">Made</span>' : '<span class="miss-pill">Missed</span>') +
+          '<div class="pts ' + ptsClass(hist.points) + '">' + fmtPts(hist.points) + "</div>" +
+        "</div>"
+      );
+    }).join("");
+    var last = g.currentRound >= g.totalRounds;
+    return (
+      '<div class="round-meta">' +
+        '<div class="round-title">Round ' + r.number + " summary</div>" +
+        '<span class="chip"><strong>' + r.cards + "</strong> cards</span>" +
+      "</div>" +
+      '<div class="summary-card">' + rows + "</div>" +
+      '<div class="action-row">' +
+        '<button type="button" class="btn btn-secondary" data-act="goto-board">Scoreboard</button>' +
+        '<button type="button" class="btn btn-primary btn-lg" data-act="next-round">' + (last ? "See final standings" : "Next round") + "</button>" +
+      "</div>"
+    );
+  }
+
+  function renderBoard() {
+    var g = currentGame();
+    if (!g) return renderHome();
+    var stats = computeGame(g);
+    var leaderIds = {};
+    (stats.leaders || []).forEach(function (l) { leaderIds[l.id] = true; });
+    var head = "<th class=\"sticky\">Round</th>" + g.players.map(function (p) {
+      return '<th class="' + (leaderIds[p.id] ? "leader-col" : "") + '">' + escapeHtml(p.name) + "</th>";
+    }).join("");
+    var bodyRows = "";
+    for (var n = 1; n <= g.totalRounds; n++) {
+      var rnd = (g.rounds || []).filter(function (x) { return x.number === n; })[0];
+      var complete = !!(rnd && rnd.complete);
+      var current = n === g.currentRound && g.phase !== "finished";
+      var cls = (complete ? "edit-row" : "") + (current ? " current-round-row" : "");
+      var cells = g.players.map(function (p) {
+        var lc = leaderIds[p.id] ? " leader-col" : "";
+        if (complete) {
+          var hist = (stats.byId[p.id].rounds || []).filter(function (x) { return x.number === n; })[0];
+          if (!hist) return "<td class=\"" + lc + "\"></td>";
+          return '<td class="' + lc + '"><span class="cell-gw">' + hist.guess + " / " + hist.wins + "</span>" +
+            '<span class="cell-pts ' + ptsClass(hist.points) + '">' + fmtPts(hist.points) + "</span></td>";
+        }
+        if (current && rnd) {
+          var gset = rnd.guessSet && rnd.guessSet[p.id] ? rnd.guesses[p.id] : "—";
+          var wset = rnd.winSet && rnd.winSet[p.id] ? rnd.wins[p.id] : "—";
+          return '<td class="' + lc + '"><span class="cell-gw">' + gset + " / " + wset + "</span><span class=\"muted\">in play</span></td>";
+        }
+        return '<td class="' + lc + ' muted">—</td>';
+      }).join("");
+      var label = "R" + n + " · " + n + "c" + (complete ? "" : current ? " · now" : "");
+      bodyRows += '<tr class="' + cls + '" ' + (complete ? 'data-act="edit-round" data-round="' + n + '"' : "") + ">" +
+        '<td class="sticky">' + label + (complete ? ' <span class="muted">edit</span>' : "") + "</td>" + cells + "</tr>";
+    }
+    var totals = "<th class=\"sticky\">Total</th>" + g.players.map(function (p) {
+      var t = stats.byId[p.id].total;
+      return '<td class="' + (leaderIds[p.id] ? "leader-col " : "") + ptsClass(t) + '">' + t + "</td>";
+    }).join("");
+    var bags = "<th class=\"sticky\">Bags</th>" + g.players.map(function (p) {
+      return '<td class="' + (leaderIds[p.id] ? "leader-col" : "") + '">' + stats.byId[p.id].bags + "</td>";
+    }).join("");
+
+    return (
+      '<div class="topbar">' +
+        '<button type="button" class="icon-btn" data-act="back-from-board" aria-label="Back">←</button>' +
+        '<div class="brand-block"><div class="brand"><span class="suit">♠</span> Scoreboard</div>' +
+        '<div class="sub">' + escapeHtml(g.name) + " · tap a finished round to edit</div></div>" +
+        '<div class="top-actions">' +
+          '<button type="button" class="btn btn-sm btn-secondary" data-act="undo" ' + (canUndo() ? "" : "disabled") + ">Undo</button>" +
+          '<button type="button" class="btn btn-sm btn-secondary" data-act="export-game">Export</button>' +
+        "</div>" +
+      "</div>" +
+      '<div class="wrap wrap-wide">' +
+        '<p class="muted" style="margin-top:0">Swipe sideways if you cannot see every player. Leader columns are highlighted in gold.</p>' +
+        '<div class="board-wrap"><table class="board">' +
+          "<thead><tr>" + head + "</tr></thead>" +
+          "<tbody>" + bodyRows + "</tbody>" +
+          "<tfoot><tr>" + totals + "</tr><tr>" + bags + "</tr></tfoot>" +
+        "</table></div>" +
+      "</div>"
+    );
+  }
+
+  function renderFinish() {
+    var g = currentGame();
+    if (!g) return renderHome();
+    var stats = computeGame(g);
+    var winner = stats.leader;
+    var tie = stats.leaders && stats.leaders.length > 1 && stats.leaders[0].total === (stats.leaders[1] ? stats.leaders[1].total : null);
+    var title, sub;
+    if (!winner) {
+      title = "Game complete";
+      sub = "";
+    } else if (tie) {
+      title = "It’s a tie";
+      sub = stats.leaders.map(function (l) { return l.name; }).join(" &amp; ") + " at " + winner.total;
+    } else {
+      title = '<span class="winner-name">' + escapeHtml(winner.name) + "</span> wins";
+      sub = winner.total + " points";
+    }
+    var rows = stats.standings.map(function (s, i) {
+      return (
+        '<div class="stand-row' + (i === 0 ? " rank-1" : "") + '">' +
+          '<div class="rank-num">' + (i + 1) + "</div>" +
+          "<div><div class=\"p-name\">" + escapeHtml(s.name) + "</div>" +
+          '<div class="muted">Bags ' + s.bags + "</div></div>" +
+          '<div class="stand-score ' + ptsClass(s.total) + '">' + s.total + "</div>" +
+        "</div>"
+      );
+    }).join("");
+    return (
+      '<div class="topbar">' +
+        '<button type="button" class="icon-btn" data-act="home" aria-label="All games">←</button>' +
+        '<div class="brand-block"><div class="brand"><span class="suit">♠</span> ' + escapeHtml(g.name) + "</div></div>" +
+        '<div class="top-actions"><button type="button" class="btn btn-sm btn-secondary" data-act="undo" ' + (canUndo() ? "" : "disabled") + ">Undo</button></div>" +
+      "</div>" +
+      '<div class="wrap finish">' +
+        '<div class="trophy" aria-hidden="true">♠</div>' +
+        "<h1>" + title + "</h1>" +
+        '<p class="gold">' + sub + "</p>" +
+        '<div class="standings">' + rows + "</div>" +
+        '<div class="home-actions">' +
+          '<button type="button" class="btn btn-primary" data-act="goto-board">Scoreboard</button>' +
+          '<button type="button" class="btn btn-secondary" data-act="export-game">Export</button>' +
+          '<button type="button" class="btn btn-secondary" data-act="new-game">New game</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderImport() {
+    return (
+      '<div class="topbar">' +
+        '<button type="button" class="icon-btn" data-act="home" aria-label="Back">←</button>' +
+        '<div class="brand-block"><div class="brand"><span class="suit">♠</span> Import games</div></div>' +
+      "</div>" +
+      '<div class="wrap">' +
+        "<p class=\"muted\">Upload or paste a JSON backup from this app. Existing games on this device are kept; imported games are added.</p>" +
+        '<div class="field">' +
+          '<label class="btn btn-secondary btn-block file-btn">Choose JSON file' +
+            '<input type="file" accept="application/json,.json" data-act="import-file">' +
+          "</label>" +
+        "</div>" +
+        '<div class="field">' +
+          "<label for=\"import-text\">Or paste JSON</label>" +
+          '<textarea id="import-text" class="code" data-field="import-text" placeholder="{ ... }">' + escapeHtml(ui.importText || "") + "</textarea>" +
+        "</div>" +
+        '<button type="button" class="btn btn-primary btn-lg btn-block" data-act="import-paste">Import</button>' +
+      "</div>"
+    );
+  }
+
+  function renderModal() {
+    if (ui.confirm) {
+      var c = ui.confirm;
+      return (
+        '<div class="overlay" data-act="close-modal">' +
+          '<div class="modal" data-stop="1">' +
+            "<h2>" + escapeHtml(c.title) + "</h2>" +
+            '<p class="hint">' + escapeHtml(c.body) + "</p>" +
+            '<div class="modal-actions">' +
+              '<button type="button" class="btn btn-secondary" data-act="close-modal">Cancel</button>' +
+              '<button type="button" class="btn btn-danger-solid" data-act="' + c.okAct + '" data-id="' + escapeHtml(c.id || "") + '">' + escapeHtml(c.okLabel || "Delete") + "</button>" +
+            "</div>" +
+          "</div>" +
+        "</div>"
+      );
+    }
+    if (ui.editRound) {
+      var g = currentGame();
+      var er = ui.editRound;
+      var rnum = er.number;
+      var cards = rnum;
+      var rnd = (g.rounds || []).filter(function (x) { return x.number === rnum; })[0];
+      var sum = 0;
+      var all = true;
+      g.players.forEach(function (p) {
+        if (er.wins[p.id] == null) all = false;
+        else sum += Number(er.wins[p.id]);
+      });
+      var rows = g.players.map(function (p) {
+        var gv = er.guesses[p.id];
+        var wv = er.wins[p.id];
+        return (
+          '<div class="edit-row" style="flex-wrap:wrap">' +
+            '<div class="p-name" style="flex-basis:100%">' + escapeHtml(p.name) + "</div>" +
+            '<div style="flex:1"><div class="lbl">Guess</div><div class="stepper">' +
+              '<button type="button" class="step-btn" data-act="edit-step" data-field="guesses" data-id="' + p.id + '" data-delta="-1">−</button>' +
+              '<div class="step-val">' + (gv == null ? "—" : gv) + "</div>" +
+              '<button type="button" class="step-btn" data-act="edit-step" data-field="guesses" data-id="' + p.id + '" data-delta="1">+</button>' +
+            "</div></div>" +
+            '<div style="flex:1"><div class="lbl">Wins</div><div class="stepper">' +
+              '<button type="button" class="step-btn" data-act="edit-step" data-field="wins" data-id="' + p.id + '" data-delta="-1">−</button>' +
+              '<div class="step-val">' + (wv == null ? "—" : wv) + "</div>" +
+              '<button type="button" class="step-btn" data-act="edit-step" data-field="wins" data-id="' + p.id + '" data-delta="1">+</button>' +
+            "</div></div>" +
+          "</div>"
+        );
+      }).join("");
+      var hint = all
+        ? (sum === cards ? "Wins add up to " + cards + ". Ready to save." : "Wins total " + sum + " — must equal " + cards + ".")
+        : "Set every guess and win count.";
+      return (
+        '<div class="overlay" data-act="close-modal">' +
+          '<div class="modal" data-stop="1">' +
+            "<h2>Edit round " + rnum + "</h2>" +
+            '<p class="hint">' + cards + " cards this round. Changing this recalculates bags and totals for later rounds. " + hint + "</p>" +
+            rows +
+            '<div class="modal-actions">' +
+              '<button type="button" class="btn btn-secondary" data-act="close-modal">Cancel</button>' +
+              '<button type="button" class="btn btn-primary" data-act="save-edit"' + (all && sum === cards ? "" : " disabled") + ">Save changes</button>" +
+            "</div>" +
+          "</div>" +
+        "</div>"
+      );
+    }
+    return "";
+  }
+
+  function render() {
+    var app = document.getElementById("app");
+    var html = "";
+    if (ui.view === "setup") html = renderSetup();
+    else if (ui.view === "play") html = renderPlay();
+    else if (ui.view === "board") html = renderBoard();
+    else if (ui.view === "finish") html = renderFinish();
+    else if (ui.view === "import") html = renderImport();
+    else html = renderHome();
+    html += renderModal();
+    html += '<div id="toast" class="toast" ' + (ui.toast ? "" : "hidden") + ">" + escapeHtml(ui.toast || "") + "</div>";
+    app.innerHTML = html;
+  }
+
+  /* ------------ events ------------ */
+  function onClick(e) {
+    var t = e.target.closest("[data-act]");
+    if (!t) return;
+    if (t.getAttribute("data-act") === "import-file") return;
+    if (t.classList.contains("overlay") && e.target !== t) return;
+    if (t.getAttribute("data-stop") && !t.hasAttribute("data-act")) return;
+    var act = t.getAttribute("data-act");
+    var id = t.getAttribute("data-id");
+    var g;
+
+    if (act === "close-modal") {
+      ui.modal = null;
+      ui.confirm = null;
+      ui.editRound = null;
+      render();
+      return;
+    }
+    if (act === "new-game") {
+      ui.draft = newDraft();
+      ui.view = "setup";
+      render();
+      return;
+    }
+    if (act === "home") {
+      ui.view = "home";
+      ui.gameId = ui.gameId;
+      render();
+      return;
+    }
+    if (act === "resume") {
+      ui.gameId = id;
+      g = currentGame();
+      if (!g) return;
+      ui.view = g.phase === "finished" ? "finish" : "play";
+      render();
+      return;
+    }
+    if (act === "confirm-delete") {
+      g = db.games.filter(function (x) { return x.id === id; })[0];
+      ui.confirm = {
+        title: "Delete this game?",
+        body: g ? ("“" + g.name + "” will be removed from this device. This cannot be undone.") : "Delete this game?",
+        okAct: "delete-game",
+        okLabel: "Delete",
+        id: id
+      };
+      render();
+      return;
+    }
+    if (act === "delete-game") {
+      deleteGame(id);
+      return;
+    }
+    if (act === "add-player") {
+      if (ui.draft.players.length >= MAX_PLAYERS) return;
+      ui.draft.players.push({ id: uid(), name: "" });
+      render();
+      return;
+    }
+    if (act === "remove-player") {
+      if (ui.draft.players.length <= MIN_PLAYERS) return;
+      ui.draft.players = ui.draft.players.filter(function (p) { return p.id !== id; });
+      if (ui.draft.firstDealerId === id) ui.draft.firstDealerId = ui.draft.players[0].id;
+      render();
+      return;
+    }
+    if (act === "move-player") {
+      var i = Number(t.getAttribute("data-i"));
+      var dir = Number(t.getAttribute("data-dir"));
+      var j = i + dir;
+      var arr = ui.draft.players;
+      if (j < 0 || j >= arr.length) return;
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      render();
+      return;
+    }
+    if (act === "set-dealer") {
+      ui.draft.firstDealerId = id;
+      render();
+      return;
+    }
+    if (act === "draft-rounds") {
+      var delta = Number(t.getAttribute("data-delta"));
+      ui.draft.totalRounds = Math.max(1, Math.min(MAX_ROUNDS, ui.draft.totalRounds + delta));
+      render();
+      return;
+    }
+    if (act === "start-game") { startGame(); return; }
+    if (act === "step") {
+      setStepper(id, t.getAttribute("data-field"), Number(t.getAttribute("data-delta")), false);
+      return;
+    }
+    if (act === "step-set") {
+      setStepper(id, t.getAttribute("data-field"), 0, true);
+      return;
+    }
+    if (act === "lock-guesses") { lockGuesses(); return; }
+    if (act === "back-guesses") { backToGuesses(); return; }
+    if (act === "finish-round") { finishRound(); return; }
+    if (act === "next-round") { nextRound(); return; }
+    if (act === "undo") { doUndo(); return; }
+    if (act === "goto-board") { ui.view = "board"; render(); return; }
+    if (act === "back-from-board") {
+      g = currentGame();
+      ui.view = g && g.phase === "finished" ? "finish" : "play";
+      render();
+      return;
+    }
+    if (act === "edit-round") {
+      g = currentGame();
+      var n = Number(t.getAttribute("data-round"));
+      var rnd = getRound(g, n);
+      ui.editRound = { number: n, guesses: clone(rnd.guesses || {}), wins: clone(rnd.wins || {}) };
+      render();
+      return;
+    }
+    if (act === "edit-step") {
+      if (!ui.editRound) return;
+      var field = t.getAttribute("data-field");
+      var dlt = Number(t.getAttribute("data-delta"));
+      g = currentGame();
+      var max = ui.editRound.number;
+      var cur = ui.editRound[field][id];
+      if (cur == null) cur = 0;
+      else cur = Number(cur);
+      cur = Math.max(0, Math.min(max, cur + dlt));
+      ui.editRound[field][id] = cur;
+      render();
+      return;
+    }
+    if (act === "save-edit") {
+      if (!ui.editRound) return;
+      saveEditedRound(ui.editRound.number, ui.editRound.guesses, ui.editRound.wins);
+      return;
+    }
+    if (act === "export-game") {
+      g = currentGame();
+      if (!g) return;
+      downloadJson(slug(g.name) + ".json", exportPayload(g));
+      toast("Download started.");
+      return;
+    }
+    if (act === "export-all") {
+      downloadJson("spades-games-backup.json", exportPayload("all"));
+      toast("Download started.");
+      return;
+    }
+    if (act === "goto-import") {
+      ui.importText = "";
+      ui.view = "import";
+      render();
+      return;
+    }
+    if (act === "import-paste") {
+      var text = ui.importText || (document.getElementById("import-text") && document.getElementById("import-text").value) || "";
+      try {
+        var data = JSON.parse(text);
+        var nadd = importGames(data);
+        if (nadd) {
+          ui.view = "home";
+          render();
+          toast("Imported " + nadd + " game" + (nadd === 1 ? "" : "s") + ".");
+        }
+      } catch (err) {
+        toast("Could not parse JSON.");
+      }
+      return;
+    }
+  }
+
+  function onInput(e) {
+    var t = e.target;
+    var field = t.getAttribute("data-field");
+    if (!field) return;
+    if (field === "player-name" && ui.draft) {
+      var pid = t.getAttribute("data-id");
+      ui.draft.players.forEach(function (p) { if (p.id === pid) p.name = t.value; });
+      var startBtn = document.querySelector("[data-act=start-game]");
+      if (startBtn) {
+        var named = ui.draft.players.filter(function (p) { return String(p.name || "").trim(); }).length;
+        startBtn.disabled = named < MIN_PLAYERS;
+        startBtn.textContent = named < MIN_PLAYERS
+          ? ("Start game · need " + (MIN_PLAYERS - named) + " more")
+          : ("Start game · " + named + " players");
+      }
+    } else if (field === "game-name" && ui.draft) {
+      ui.draft.name = t.value;
+    } else if (field === "import-text") {
+      ui.importText = t.value;
+    }
+  }
+
+  function onChange(e) {
+    var t = e.target;
+    if (t.getAttribute("data-act") === "import-file" && t.files && t.files[0]) {
+      var file = t.files[0];
+      var reader = new FileReader();
+      reader.onload = function () {
+        try {
+          var data = JSON.parse(String(reader.result || ""));
+          var nadd = importGames(data);
+          if (nadd) {
+            ui.view = "home";
+            render();
+            toast("Imported " + nadd + " game" + (nadd === 1 ? "" : "s") + ".");
+          }
+        } catch (err) {
+          toast("Could not parse that file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  function boot() {
+    db = loadDb();
+    var app = document.getElementById("app");
+    app.addEventListener("click", onClick);
+    app.addEventListener("input", onInput);
+    app.addEventListener("change", onChange);
+    render();
+  }
+
+  window.Spades = {
+    scoreRoundResult: scoreRoundResult,
+    applyBagPenalty: applyBagPenalty,
+    computeGame: computeGame,
+    dealerIndex: dealerIndex,
+    leadIndex: leadIndex,
+    defaultGameName: defaultGameName,
+    normalizeImported: normalizeImported,
+    importGames: importGames,
+    exportPayload: exportPayload,
+    getDb: function () { return db; },
+    setDb: function (next) { db = next; saveDb(); },
+    getUi: function () { return ui; },
+    render: render,
+    startGame: startGame,
+    getRound: getRound,
+    computeFromCurrent: function () { return computeGame(currentGame()); }
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+
+  </script>
+</body>
+</html>
